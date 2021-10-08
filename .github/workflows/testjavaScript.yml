@@ -1,0 +1,29 @@
+#/.gitgub/workflows
+name: C1-JAVASCRIPT
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workfloe_dispatch:
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]  
+    steps:
+      - uses: actions-checkout@v2
+      - name: Instalar node JS
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node-version }}       
+      - name: Instalar paquetes npm
+        run: |
+            npm install
+            npm ci
+      - name: Compilar y ejecutar
+        run: |
+            npm run build
+            npm run test            
